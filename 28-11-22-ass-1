@@ -1,0 +1,5 @@
+bal=30000
+amt=int(input('enter an amount:'))
+credited_amt=bal+amt
+print('credditted amount is :',amt)
+print('main balance is:',credited_amt)
