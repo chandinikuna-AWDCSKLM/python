@@ -1,0 +1,7 @@
+oldpin=7898
+newpin=int(input('enter pin number:'))
+if oldpin==newpin:
+    print('continue the transcation process')
+else:
+    print('invalid pin number')
+    print('please try again!!!!')
