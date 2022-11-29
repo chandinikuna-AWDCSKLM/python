@@ -1,0 +1,12 @@
+rollno=input("Enter Roll Number : ")
+name = input("Enter Name : ")
+group=input("Enter group :")
+s1 =int(input("Enter subject1: "))
+s2 = int(input("Enter subject2 :"))
+s3= int(input("Enter  subject3: "))
+total=(s1+s2+s3)//3
+print(total)
+if (total>90 or total>75 or total>35):
+     print('pass')
+else:
+      print('fail')
