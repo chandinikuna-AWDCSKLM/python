@@ -1,0 +1,16 @@
+basicsalary=int(input('enter your basic salary'))
+da=int(input('enter your dialy allowances'))
+ta=int(input('enter  your travelling allowances'))
+hra=int(input('enter your  house rental allowances'))
+netsalary=basicsalary+da+ta+hra;
+if netsalary>100000:
+            tax=netsalary*10/100  
+elif netsalary>50000:
+         tax=netsalary*7/100 
+elif netsalary>40000:
+          tax=netsalary*4/100
+elif netsalary>20000:
+          tax=netsalary*2/100
+else:
+           tax=0
+print('',tax)
