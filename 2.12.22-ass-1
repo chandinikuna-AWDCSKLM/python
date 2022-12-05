@@ -1,0 +1,11 @@
+count = 0
+n = int(input('\nEnter whole number to check : '))
+i = 2
+while i <= (n/2):
+    if (n%i) == 0:
+        flag = 1
+        break
+if flag == 0:
+    print(n,' is a prime number.')
+else:
+    print(n,' is not a prime number.')
