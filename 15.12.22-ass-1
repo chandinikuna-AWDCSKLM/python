@@ -1,0 +1,9 @@
+def move(list):
+    list.sort
+list = []
+n = int(input())
+for i in range(0, n):
+    item = int(input())
+    list.append(item)
+move(list)
+print(list)
