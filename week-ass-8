@@ -1,0 +1,9 @@
+first=int(input("The first/start year is:"))
+last=int(input("The last/end year is:"))
+a=[]
+for year in range(first,last+1):
+    if year%400==0:
+        a.append(year)
+    elif year%4==0 and year%100!=0:
+        a.append(year)
+print("The years are:",a)
