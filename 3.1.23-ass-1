@@ -1,0 +1,16 @@
+r=int(input())
+c=int(input())
+A=[]
+sum=0
+for i in range(0,r):
+    l=[]
+    for j in range(0,c):
+        x=int(input())
+        l.append(x)
+    A.append(l)
+for i in A:
+    print(i)
+for i in range(r):
+    for j in range(c):
+        if i+j==c-1:
+            print(A[i][j])
