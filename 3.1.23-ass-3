@@ -1,0 +1,24 @@
+r=int(input())
+A=[]
+sum=0
+for i in range(0,r):
+    l=[]
+    for j in range(0,r):
+        x=int(input())
+        l.append(x)
+    A.append(l)
+sum2=0
+for i in A:
+    print(i)
+for i in range(r):
+    for j in range(r):
+        if i+j==0 or i==j:
+           sum2=sum2+A[i][j]
+sum1=0        
+
+for i in range(r):
+    for j in range(r):
+        if i+j==r-1:
+            sum1=sum1+A[i][j]
+              
+print(abs(sum1-sum2))
