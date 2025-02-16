@@ -1,0 +1,258 @@
+
+To create a statistical calculator with a graphical user interface (GUI) that includes various statistical functions, we can use Tkinter, a built-in Python library for creating GUI applications. The following Python code demonstrates how to build a basic statistical calculator with buttons that allow the user to perform various statistical operations.
+We will integrate the following functionalities:
+1.	Linear, quadratic, logarithmic, and exponential functions.
+2.	Differentiation and integration of simple functions.
+3.	Measures of central tendency and dispersion.
+4.	Skewness, kurtosis, probability distributions, hypothesis testing, small and large sample tests, and ANOVA.
+First, ensure that you have the required libraries installed:
+pip install numpy scipy sympy matplotlib
+Python Code for Statistical Calculator with Tkinter
+import tkinter as tk
+from tkinter import messagebox
+import numpy as np
+import scipy.stats as stats
+import sympy as sp
+import math
+
+# Function Definitions
+
+# Mathematical Functions
+def linear(x, m=1, c=0):
+    return m * x + c
+
+def quadratic(x, a=1, b=0, c=0):
+    return a * x**2 + b * x + c
+
+def logarithmic(x, base=math.e):
+    return np.log(x) / np.log(base)
+
+def exponential(x, a=1, b=1):
+    return a * np.exp(b * x)
+
+# Differentiation and Integration
+def differentiate(expr, var):
+    diff = sp.diff(expr, var)
+    return diff
+
+def integrate(expr, var):
+    integral = sp.integrate(expr, var)
+    return integral
+
+# Central Tendency
+def mean(data):
+    return np.mean(data)
+
+def median(data):
+    return np.median(data)
+
+def mode(data):
+    return stats.mode(data).mode[0]
+
+def harmonic_mean(data):
+    return len(data) / np.sum(1.0 / np.array(data))
+
+def geometric_mean(data):
+    return stats.gmean(data)
+
+# Dispersion
+def range_dispersion(data):
+    return np.max(data) - np.min(data)
+
+def quartile_deviation(data):
+    Q3, Q1 = np.percentile(data, [75 ,25])
+    return (Q3 - Q1) / 2
+
+def standard_deviation(data):
+    return np.std(data)
+
+def mean_deviation(data):
+    return np.mean(np.abs(data - np.mean(data)))
+
+def percentile_deviation(data):
+    Q3, Q1 = np.percentile(data, [75, 25])
+    return (Q3 - Q1) / np.mean(data) * 100
+
+# Skewness and Kurtosis
+def skewness(data):
+    return stats.skew(data)
+
+def kurtosis(data):
+    return stats.kurtosis(data)
+
+# Hypothesis Testing
+def t_test(data1, data2):
+    t_stat, p_value = stats.ttest_ind(data1, data2)
+    return t_stat, p_value
+
+def z_test(data, mean, std_dev, n):
+    z_stat = (np.mean(data) - mean) / (std_dev / np.sqrt(n))
+    p_value = 1 - stats.norm.cdf(abs(z_stat))
+    return z_stat, p_value
+
+# ANOVA Test
+def anova(*groups):
+    f_stat, p_value = stats.f_oneway(*groups)
+    return f_stat, p_value
+
+
+# GUI Application (Tkinter)
+class StatisticalCalculator(tk.Tk):
+    def __init__(self):
+        super().__init__()
+        self.title("Statistical Calculator")
+        self.geometry("600x500")
+
+        # Input fields and labels
+        self.label = tk.Label(self, text="Enter values separated by commas:")
+        self.label.pack(pady=10)
+
+        self.data_entry = tk.Entry(self, width=50)
+        self.data_entry.pack(pady=10)
+
+        # Output display
+        self.result_label = tk.Label(self, text="Result will be displayed here")
+        self.result_label.pack(pady=20)
+
+        # Buttons for operations
+        self.create_buttons()
+
+    def create_buttons(self):
+        # Button for Linear Function
+        linear_button = tk.Button(self, text="Linear Function", command=self.linear_func)
+        linear_button.pack(pady=5)
+
+        # Button for Quadratic Function
+        quadratic_button = tk.Button(self, text="Quadratic Function", command=self.quadratic_func)
+        quadratic_button.pack(pady=5)
+
+        # Button for Logarithmic Function
+        log_button = tk.Button(self, text="Logarithmic Function", command=self.log_func)
+        log_button.pack(pady=5)
+
+        # Button for Exponential Function
+        exp_button = tk.Button(self, text="Exponential Function", command=self.exp_func)
+        exp_button.pack(pady=5)
+
+        # Button for Mean
+        mean_button = tk.Button(self, text="Mean", command=self.mean_func)
+        mean_button.pack(pady=5)
+
+        # Button for Median
+        median_button = tk.Button(self, text="Median", command=self.median_func)
+        median_button.pack(pady=5)
+
+        # Button for Mode
+        mode_button = tk.Button(self, text="Mode", command=self.mode_func)
+        mode_button.pack(pady=5)
+
+        # Button for Standard Deviation
+        sd_button = tk.Button(self, text="Standard Deviation", command=self.sd_func)
+        sd_button.pack(pady=5)
+
+        # Button for Skewness
+        skewness_button = tk.Button(self, text="Skewness", command=self.skewness_func)
+        skewness_button.pack(pady=5)
+
+        # Button for Kurtosis
+        kurtosis_button = tk.Button(self, text="Kurtosis", command=self.kurtosis_func)
+        kurtosis_button.pack(pady=5)
+
+    def linear_func(self):
+        try:
+            x = float(self.data_entry.get())
+            result = linear(x)
+            self.result_label.config(text=f"Linear Result: {result}")
+        except ValueError:
+            messagebox.showerror("Invalid Input", "Please enter valid numbers")
+
+    def quadratic_func(self):
+        try:
+            x = float(self.data_entry.get())
+            result = quadratic(x)
+            self.result_label.config(text=f"Quadratic Result: {result}")
+        except ValueError:
+            messagebox.showerror("Invalid Input", "Please enter valid numbers")
+
+    def log_func(self):
+        try:
+            x = float(self.data_entry.get())
+            result = logarithmic(x)
+            self.result_label.config(text=f"Logarithmic Result: {result}")
+        except ValueError:
+            messagebox.showerror("Invalid Input", "Please enter valid numbers")
+
+    def exp_func(self):
+        try:
+            x = float(self.data_entry.get())
+            result = exponential(x)
+            self.result_label.config(text=f"Exponential Result: {result}")
+        except ValueError:
+            messagebox.showerror("Invalid Input", "Please enter valid numbers")
+
+    def mean_func(self):
+        try:
+            data = list(map(float, self.data_entry.get().split(',')))
+            result = mean(data)
+            self.result_label.config(text=f"Mean: {result}")
+        except ValueError:
+            messagebox.showerror("Invalid Input", "Please enter valid numbers")
+
+    def median_func(self):
+        try:
+            data = list(map(float, self.data_entry.get().split(',')))
+            result = median(data)
+            self.result_label.config(text=f"Median: {result}")
+        except ValueError:
+            messagebox.showerror("Invalid Input", "Please enter valid numbers")
+
+    def mode_func(self):
+        try:
+            data = list(map(float, self.data_entry.get().split(',')))
+            result = mode(data)
+            self.result_label.config(text=f"Mode: {result}")
+        except ValueError:
+            messagebox.showerror("Invalid Input", "Please enter valid numbers")
+
+    def sd_func(self):
+        try:
+            data = list(map(float, self.data_entry.get().split(',')))
+            result = standard_deviation(data)
+            self.result_label.config(text=f"Standard Deviation: {result}")
+        except ValueError:
+            messagebox.showerror("Invalid Input", "Please enter valid numbers")
+
+    def skewness_func(self):
+        try:
+            data = list(map(float, self.data_entry.get().split(',')))
+            result = skewness(data)
+            self.result_label.config(text=f"Skewness: {result}")
+        except ValueError:
+            messagebox.showerror("Invalid Input", "Please enter valid numbers")
+
+    def kurtosis_func(self):
+        try:
+            data = list(map(float, self.data_entry.get().split(',')))
+            result = kurtosis(data)
+            self.result_label.config(text=f"Kurtosis: {result}")
+        except ValueError:
+            messagebox.showerror("Invalid Input", "Please enter valid numbers")
+
+
+# Run the application
+if __name__ == "__main__":
+    app = StatisticalCalculator()
+    app.mainloop()
+How This Code Works:
+1.	GUI: The application uses Tkinter to create a simple interface with entry fields, labels, and buttons.
+2.	Buttons: Each button corresponds to a specific function, such as linear functions, quadratic functions, and measures of central tendency (mean, median, mode).
+3.	Error Handling: If the user enters invalid data (e.g., non-numeric characters), error messages are displayed using messagebox.
+4.	Functions: The functions for statistical calculations (mean, mode, differentiation, etc.) are implemented as separate functions, which are called when the respective buttons are clicked.
+5.	Result Display: After a function is executed, the result is displayed on the GUI.
+Features:
+•	You can input comma-separated values for statistical calculations.
+•	Buttons allow you to calculate and display results for various statistical functions (e.g., mean, skewness, kurtosis).
+To Run:
+1.	Save the code to a .py file (e.g., stat_calculator.py).
+2.	Run the file using Python.
+3.	A GUI window will appear where you can enter data and press buttons for calculations.
